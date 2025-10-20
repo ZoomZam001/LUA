@@ -5,77 +5,148 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learn Lua Scripting</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #1e1e2f;
-        color: #f5f5f5;
-        margin: 0;
-        padding: 0;
+    :root {
+        --bg-dark: #1e1e2f;
+        --bg-mid: #2b2b45;
+        --bg-light: #3b3b5c;
+        --accent: #6c63ff;
+        --accent-hover: #817aff;
+        --text-light: #f5f5f5;
+        --text-muted: #b5b5d1;
     }
+
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-light);
+        margin: 0;
+    }
+
     header {
-        background: #3b3b5c;
-        padding: 1rem;
+        background: var(--bg-light);
+        padding: 2rem 1rem;
         text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
     header h1 {
         margin: 0;
+        font-size: 2.2rem;
     }
+    header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+    }
+
     nav {
-        background: #2b2b45;
+        background: var(--bg-mid);
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        border-bottom: 2px solid var(--accent);
     }
     nav a {
-        color: #f5f5f5;
+        color: var(--text-light);
         text-decoration: none;
         margin: 0.5rem 1rem;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        transition: background 0.3s;
     }
     nav a:hover {
-        background: #4a4a7a;
+        background: var(--accent-hover);
     }
+
     section {
-        padding: 2rem;
         display: none;
-        max-width: 800px;
-        margin: auto;
-        line-height: 1.6;
+        max-width: 850px;
+        margin: 2rem auto;
+        background: var(--bg-mid);
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        line-height: 1.7;
     }
     section.active {
         display: block;
+        animation: fadeIn 0.5s ease-in;
     }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
     pre {
         background: #2e2e44;
         padding: 1rem;
         border-radius: 5px;
         overflow-x: auto;
+        font-size: 1rem;
     }
-    .quiz {
-        background: #2b2b45;
+
+    h2 {
+        color: var(--accent);
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 0.4rem;
+    }
+
+    .definition {
+        background: #24243b;
         padding: 1rem;
-        border-radius: 5px;
+        border-left: 4px solid var(--accent);
+        border-radius: 6px;
+        margin: 1rem 0;
+    }
+
+    .quiz {
+        background: #24243b;
+        padding: 1rem;
+        border-radius: 8px;
         margin-top: 1.5rem;
     }
-    button {
-        background: #4a4a7a;
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
+
+    input {
+        width: 100%;
+        padding: 0.5rem;
         border-radius: 5px;
-        cursor: pointer;
+        border: none;
         margin-top: 0.5rem;
     }
-    button:hover {
-        background: #5a5aa0;
+
+    button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 1rem;
+        font-size: 1rem;
     }
+    button:hover {
+        background: var(--accent-hover);
+    }
+
     footer {
-        background: #2b2b45;
-        color: #aaa;
+        background: var(--bg-mid);
+        color: var(--text-muted);
         text-align: center;
         padding: 1rem;
         margin-top: 2rem;
+        font-size: 0.9rem;
+    }
+
+    .progress {
+        margin-top: 1rem;
+        background: #3d3d66;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .progress-bar {
+        height: 10px;
+        background: var(--accent);
+        width: 0%;
+        transition: width 0.4s ease;
     }
 </style>
 </head>
@@ -83,7 +154,7 @@
 
 <header>
     <h1>Learn Lua Scripting</h1>
-    <p>Your guide to mastering Lua — from basics to advanced.</p>
+    <p>Your guide to mastering Lua — from basics to advanced programming!</p>
 </header>
 
 <nav>
@@ -91,42 +162,47 @@
     <a href="#" onclick="showSection('lesson1')">Lesson 1</a>
     <a href="#" onclick="showSection('lesson2')">Lesson 2</a>
     <a href="#" onclick="showSection('lesson3')">Lesson 3</a>
+    <a href="#" onclick="showSection('lesson4')">Lesson 4</a>
+    <a href="#" onclick="showSection('lesson5')">Lesson 5</a>
     <a href="#" onclick="showSection('quiz')">Quiz</a>
 </nav>
 
 <section id="home" class="active">
     <h2>Welcome to Lua Learning!</h2>
-    <p>Lua is a lightweight, fast, and easy-to-learn scripting language used in games, embedded systems, and automation.</p>
+    <p>Lua is a lightweight, high-level scripting language known for its simplicity and flexibility.</p>
     <ul>
-        <li>Simple and minimal syntax</li>
-        <li>Used in <strong>Roblox</strong>, <strong>World of Warcraft</strong> addons, and more</li>
-        <li>Integrates easily with C and C++</li>
+        <li>🧠 Simple, beginner-friendly syntax</li>
+        <li>🎮 Widely used in <strong>Roblox</strong>, <strong>World of Warcraft</strong> addons, and <strong>game engines</strong></li>
+        <li>⚙️ Integrates easily with C/C++ and embedded systems</li>
     </ul>
-    <p>Use the menu above to start learning!</p>
+    <div class="definition"><strong>Definition:</strong> <em>Lua</em> — A lightweight scripting language designed for embedded use in applications.</div>
 </section>
 
 <section id="lesson1">
     <h2>Lesson 1: Variables and Printing</h2>
-    <p>In Lua, you can store data in variables using the <code>local</code> keyword.</p>
+    <p>Variables are used to store data. In Lua, use the <code>local</code> keyword to create a variable that only exists inside the current block.</p>
     <pre><code>local name = "Lua"
 print("Hello, " .. name)</code></pre>
-    <p><strong>Explanation:</strong> The <code>..</code> operator joins strings together.</p>
+    <p><strong>Explanation:</strong> The <code>..</code> operator joins strings together (called <em>concatenation</em>).</p>
+    <div class="definition"><strong>Variable:</strong> A storage location that holds a value that can change while the program runs.</div>
+    <div class="definition"><strong>Concatenation:</strong> Combining two or more strings into one using <code>..</code>.</div>
 </section>
 
 <section id="lesson2">
     <h2>Lesson 2: Tables (Lua’s Arrays & Dictionaries)</h2>
-    <p>Tables are Lua’s main data structure. You can use them as lists or maps.</p>
+    <p>Tables are Lua’s only data structure — they can act as lists, dictionaries, or even objects.</p>
     <pre><code>local fruits = {"apple", "banana", "cherry"}
 print(fruits[1])  -- prints "apple"
 
 local person = {name = "Alex", age = 20}
 print(person.name)</code></pre>
-    <p><strong>Tip:</strong> Lua tables start counting at 1, not 0!</p>
+    <p><strong>Tip:</strong> Lua starts indexing at 1, not 0!</p>
+    <div class="definition"><strong>Table:</strong> A collection type used to store multiple values (lists or key-value pairs).</div>
 </section>
 
 <section id="lesson3">
     <h2>Lesson 3: Loops and Functions</h2>
-    <p>Loops let you repeat actions. Functions let you organize code.</p>
+    <p>Loops allow you to repeat code, while functions help organize it for reuse.</p>
     <pre><code>for i = 1, 5 do
     print("Count: " .. i)
 end
@@ -136,33 +212,47 @@ function greet(name)
 end
 
 greet("Lua Learner")</code></pre>
+    <div class="definition"><strong>Function:</strong> A block of reusable code that performs a specific task.</div>
+</section>
+
+<section id="lesson4">
+    <h2>Lesson 4: Conditionals (If, Else, and Logic)</h2>
+    <p>Conditionals let your program make decisions based on logic.</p>
+    <pre><code>local age = 18
+
+if age >= 18 then
+    print("You are an adult!")
+else
+    print("You are a minor.")
+end</code></pre>
+    <div class="definition"><strong>Conditional:</strong> Code that executes only when certain conditions are true.</div>
+</section>
+
+<section id="lesson5">
+    <h2>Lesson 5: Roblox Lua Basics</h2>
+    <p>Roblox uses a version of Lua called <strong>Luau</strong> for scripting game mechanics.</p>
+    <pre><code>local part = Instance.new("Part")
+part.Size = Vector3.new(4, 1, 4)
+part.Position = Vector3.new(0, 5, 0)
+part.Anchored = true
+part.Parent = workspace</code></pre>
+    <p>This code creates a floating block in Roblox Studio!</p>
+    <div class="definition"><strong>Instance:</strong> A Roblox object, like a Part, Script, or GUI element.</div>
 </section>
 
 <section id="quiz">
-    <h2>Test Your Knowledge</h2>
+    <h2>🧩 Test Your Knowledge</h2>
+    <p>Answer the questions below to test your Lua skills!</p>
 
-    <div class="quiz">
-        <p><strong>1.</strong> What keyword is used to declare a local variable in Lua?</p>
-        <input type="text" id="q1" placeholder="Your answer...">
-    </div>
-
-    <div class="quiz">
-        <p><strong>2.</strong> What symbol is used for string concatenation in Lua?</p>
-        <input type="text" id="q2" placeholder="Your answer...">
-    </div>
-
-    <div class="quiz">
-        <p><strong>3.</strong> What number does Lua start counting from in arrays?</p>
-        <input type="number" id="q3" placeholder="Your answer...">
-    </div>
-
-    <div class="quiz">
-        <p><strong>4.</strong> Which function prints text to the console?</p>
-        <input type="text" id="q4" placeholder="Your answer...">
-    </div>
+    <div class="quiz"><p><strong>1.</strong> What keyword declares a local variable?</p><input type="text" id="q1"></div>
+    <div class="quiz"><p><strong>2.</strong> What operator joins two strings?</p><input type="text" id="q2"></div>
+    <div class="quiz"><p><strong>3.</strong> What number does Lua start indexing from?</p><input type="number" id="q3"></div>
+    <div class="quiz"><p><strong>4.</strong> What function outputs text to the console?</p><input type="text" id="q4"></div>
+    <div class="quiz"><p><strong>5.</strong> What is the name of Lua’s main data structure?</p><input type="text" id="q5"></div>
 
     <button onclick="checkQuiz()">Submit Quiz</button>
     <p id="quizResult"></p>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
 </section>
 
 <footer>
@@ -181,7 +271,8 @@ function checkQuiz() {
         q1: "local",
         q2: "..",
         q3: "1",
-        q4: "print"
+        q4: "print",
+        q5: "table"
     };
 
     let score = 0;
@@ -190,8 +281,15 @@ function checkQuiz() {
         if (userAns == answers[key]) score++;
     }
 
+    const total = Object.keys(answers).length;
+    const percent = Math.round((score / total) * 100);
+
     const result = document.getElementById('quizResult');
-    result.innerHTML = `<strong>You scored ${score}/4!</strong> ${score === 4 ? "Excellent work!" : "Keep practicing!"}`;
+    result.innerHTML = `<strong>You scored ${score}/${total} (${percent}%)!</strong> ${
+        percent === 100 ? "🌟 Perfect!" : percent >= 60 ? "👍 Good job!" : "💡 Keep practicing!"
+    }`;
+
+    document.getElementById('progressBar').style.width = percent + '%';
 }
 </script>
 
