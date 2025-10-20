@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn Lua Scripting</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #1e1e2f;
+        color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background: #3b3b5c;
+        padding: 1rem;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+    }
+    nav {
+        background: #2b2b45;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    nav a {
+        color: #f5f5f5;
+        text-decoration: none;
+        margin: 0.5rem 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+    }
+    nav a:hover {
+        background: #4a4a7a;
+    }
+    section {
+        padding: 2rem;
+        display: none;
+        max-width: 800px;
+        margin: auto;
+        line-height: 1.6;
+    }
+    section.active {
+        display: block;
+    }
+    pre {
+        background: #2e2e44;
+        padding: 1rem;
+        border-radius: 5px;
+        overflow-x: auto;
+    }
+    .quiz {
+        background: #2b2b45;
+        padding: 1rem;
+        border-radius: 5px;
+        margin-top: 1.5rem;
+    }
+    button {
+        background: #4a4a7a;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 0.5rem;
+    }
+    button:hover {
+        background: #5a5aa0;
+    }
+    footer {
+        background: #2b2b45;
+        color: #aaa;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Learn Lua Scripting</h1>
+    <p>Your guide to mastering Lua — from basics to advanced.</p>
+</header>
+
+<nav>
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('lesson1')">Lesson 1</a>
+    <a href="#" onclick="showSection('lesson2')">Lesson 2</a>
+    <a href="#" onclick="showSection('lesson3')">Lesson 3</a>
+    <a href="#" onclick="showSection('quiz')">Quiz</a>
+</nav>
+
+<section id="home" class="active">
+    <h2>Welcome to Lua Learning!</h2>
+    <p>Lua is a lightweight, fast, and easy-to-learn scripting language used in games, embedded systems, and automation.</p>
+    <ul>
+        <li>Simple and minimal syntax</li>
+        <li>Used in <strong>Roblox</strong>, <strong>World of Warcraft</strong> addons, and more</li>
+        <li>Integrates easily with C and C++</li>
+    </ul>
+    <p>Use the menu above to start learning!</p>
+</section>
+
+<section id="lesson1">
+    <h2>Lesson 1: Variables and Printing</h2>
+    <p>In Lua, you can store data in variables using the <code>local</code> keyword.</p>
+    <pre><code>local name = "Lua"
+print("Hello, " .. name)</code></pre>
+    <p><strong>Explanation:</strong> The <code>..</code> operator joins strings together.</p>
+</section>
+
+<section id="lesson2">
+    <h2>Lesson 2: Tables (Lua’s Arrays & Dictionaries)</h2>
+    <p>Tables are Lua’s main data structure. You can use them as lists or maps.</p>
+    <pre><code>local fruits = {"apple", "banana", "cherry"}
+print(fruits[1])  -- prints "apple"
+
+local person = {name = "Alex", age = 20}
+print(person.name)</code></pre>
+    <p><strong>Tip:</strong> Lua tables start counting at 1, not 0!</p>
+</section>
+
+<section id="lesson3">
+    <h2>Lesson 3: Loops and Functions</h2>
+    <p>Loops let you repeat actions. Functions let you organize code.</p>
+    <pre><code>for i = 1, 5 do
+    print("Count: " .. i)
+end
+
+function greet(name)
+    print("Hello, " .. name)
+end
+
+greet("Lua Learner")</code></pre>
+</section>
+
+<section id="quiz">
+    <h2>Test Your Knowledge</h2>
+
+    <div class="quiz">
+        <p><strong>1.</strong> What keyword is used to declare a local variable in Lua?</p>
+        <input type="text" id="q1" placeholder="Your answer...">
+    </div>
+
+    <div class="quiz">
+        <p><strong>2.</strong> What symbol is used for string concatenation in Lua?</p>
+        <input type="text" id="q2" placeholder="Your answer...">
+    </div>
+
+    <div class="quiz">
+        <p><strong>3.</strong> What number does Lua start counting from in arrays?</p>
+        <input type="number" id="q3" placeholder="Your answer...">
+    </div>
+
+    <div class="quiz">
+        <p><strong>4.</strong> Which function prints text to the console?</p>
+        <input type="text" id="q4" placeholder="Your answer...">
+    </div>
+
+    <button onclick="checkQuiz()">Submit Quiz</button>
+    <p id="quizResult"></p>
+</section>
+
+<footer>
+    <p>© 2025 Learn Lua | Made with ❤️ for learners | Hosted on GitHub Pages</p>
+</footer>
+
+<script>
+function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+function checkQuiz() {
+    const answers = {
+        q1: "local",
+        q2: "..",
+        q3: "1",
+        q4: "print"
+    };
+
+    let score = 0;
+    for (let key in answers) {
+        const userAns = document.getElementById(key).value.trim().toLowerCase();
+        if (userAns == answers[key]) score++;
+    }
+
+    const result = document.getElementById('quizResult');
+    result.innerHTML = `<strong>You scored ${score}/4!</strong> ${score === 4 ? "Excellent work!" : "Keep practicing!"}`;
+}
+</script>
+
+</body>
+</html>
