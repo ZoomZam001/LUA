@@ -32,6 +32,16 @@
     header h1 { margin: 0; font-size: 2.2rem; }
     header p { color: var(--text-muted); font-size: 1.1rem; }
 
+    .version {
+        background: var(--accent);
+        color: white;
+        display: inline-block;
+        padding: 0.3rem 0.7rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+
     nav {
         background: var(--bg-mid);
         display: flex;
@@ -47,9 +57,7 @@
         border-radius: 8px;
         transition: background 0.3s;
     }
-    nav a:hover {
-        background: var(--accent-hover);
-    }
+    nav a:hover { background: var(--accent-hover); }
 
     section {
         display: none;
@@ -98,6 +106,7 @@
         padding: 1rem;
         border-radius: 8px;
         margin-top: 1.5rem;
+        white-space: pre-wrap;
     }
 
     input, textarea {
@@ -127,9 +136,7 @@
         font-size: 1rem;
         transition: background 0.3s;
     }
-    button:hover {
-        background: var(--accent-hover);
-    }
+    button:hover { background: var(--accent-hover); }
 
     footer {
         background: var(--bg-mid);
@@ -159,6 +166,7 @@
 <header>
     <h1>Learn Lua Scripting</h1>
     <p>Your guide to mastering Lua — from basics to advanced programming!</p>
+    <div class="version">v1.1.0</div>
 </header>
 
 <nav>
@@ -172,18 +180,16 @@
     <a href="#" onclick="showSection('playground')">Playground</a>
 </nav>
 
-<!-- 🏠 HOME -->
 <section id="home" class="active">
     <h2>Welcome to Lua Learning!</h2>
     <p>Lua is a lightweight, high-level scripting language known for its simplicity and flexibility.</p>
     <ul>
         <li>🧠 Simple, beginner-friendly syntax</li>
-        <li>🎮 Widely used in <strong>Roblox</strong> and <strong>game engines</strong></li>
-        <li>⚙️ Integrates easily with C/C++ and embedded systems</li>
+        <li>🎮 Used in <strong>Roblox</strong>, <strong>game engines</strong>, and embedded systems</li>
+        <li>⚙️ Great for automation and prototyping</li>
     </ul>
 </section>
 
-<!-- 📚 LESSONS (same as before) -->
 <section id="lesson1">
     <h2>Lesson 1: Variables and Printing</h2>
     <pre><code>local name = "Lua"
@@ -193,16 +199,19 @@ print("Hello, " .. name)</code></pre>
 <section id="lesson2">
     <h2>Lesson 2: Tables (Lua’s Arrays & Dictionaries)</h2>
     <pre><code>local fruits = {"apple", "banana", "cherry"}
-print(fruits[1])
-</code></pre>
+print(fruits[1])</code></pre>
 </section>
 
 <section id="lesson3">
     <h2>Lesson 3: Loops and Functions</h2>
-    <pre><code>for i = 1, 5 do
-    print("Count: " .. i)
+    <pre><code>local function printABC()
+    print("A")
+    print("B")
+    print("C")
 end
-</code></pre>
+
+printABC()
+printABC()</code></pre>
 </section>
 
 <section id="lesson4">
@@ -210,6 +219,8 @@ end
     <pre><code>local age = 18
 if age >= 18 then
     print("You are an adult!")
+else
+    print("You are a minor.")
 end</code></pre>
 </section>
 
@@ -220,7 +231,6 @@ part.Anchored = true
 part.Parent = workspace</code></pre>
 </section>
 
-<!-- 🧩 QUIZ -->
 <section id="quiz">
     <h2>🧩 Test Your Knowledge</h2>
     <div class="quiz"><p><strong>1.</strong> What keyword declares a local variable?</p><input type="text" id="q1"></div>
@@ -233,11 +243,10 @@ part.Parent = workspace</code></pre>
     <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
 </section>
 
-<!-- 💻 PLAYGROUND -->
 <section id="playground">
     <h2>💻 Lua Code Playground</h2>
-    <p>Try Lua code below and see the output instantly — plus a human-readable explanation!</p>
-    <textarea id="luaCode" placeholder="Example:&#10;local x = 2 + 2&#10;print(x)"></textarea>
+    <p>Try Lua code below and see the simulated output instantly!</p>
+    <textarea id="luaCode" placeholder="Example:&#10;local function printABC()&#10;  print('A')&#10;  print('B')&#10;  print('C')&#10;end&#10;&#10;printABC()&#10;printABC()"></textarea>
     <button onclick="runLua()">▶ Run Code</button>
     <div class="output" id="output">💻 Output will appear here...</div>
     <div class="explainer" id="explainer">🧠 Code explainer will appear here...</div>
@@ -267,29 +276,36 @@ function checkQuiz() {
     document.getElementById("progressBar").style.width = percent + "%";
 }
 
-// 🧩 LUA SIMULATION
+// 🧩 Lua output simulator — handles multiple print()s in sequence
 function runLua() {
     const code = document.getElementById("luaCode").value.trim();
     const outputEl = document.getElementById("output");
     const explainerEl = document.getElementById("explainer");
-    if (!code) { outputEl.textContent = "⚠️ Please enter Lua code."; return; }
+
+    if (!code) {
+        outputEl.textContent = "⚠️ Please enter Lua code.";
+        return;
+    }
 
     let output = "";
-    const lines = code.split("\n");
-    for (let line of lines) {
+    const lines = code.split(/\r?\n/);
+    const printRegex = /print\s*\((.*?)\)/g;
+
+    lines.forEach(line => {
         line = line.trim();
-        if (line.startsWith("print")) {
-            const match = line.match(/print\((.*)\)/);
-            if (match) {
-                let content = match[1];
-                try {
-                    if (/^".*"$/.test(content)) output += content.slice(1,-1) + "\n";
-                    else if (/^[0-9+\-*/ ().]+$/.test(content)) output += eval(content) + "\n";
-                    else output += content + "\n";
-                } catch { output += "⚠️ Error in: " + content + "\n"; }
+        let match;
+        while ((match = printRegex.exec(line)) !== null) {
+            let content = match[1];
+            try {
+                if (/^["'].*["']$/.test(content)) output += content.slice(1, -1) + "\n";
+                else if (/^[0-9+\-*/ ().]+$/.test(content)) output += eval(content) + "\n";
+                else output += content + "\n";
+            } catch {
+                output += "⚠️ Error in: " + content + "\n";
             }
         }
-    }
+    });
+
     outputEl.textContent = output || "✅ Code executed successfully (no output).";
 
     let exp = "";
