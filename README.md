@@ -33,7 +33,7 @@ No backend required — runs entirely in your browser!
 
 Clone this repository:
 
-git clone https://github.com/YourUsername/learn-lua.git
+git clone https://github.com/YourUsername/learn-lua.git](https://github.com/ZoomZam001/Learn-Lua)
 
 
 Open the project:
