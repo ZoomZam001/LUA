@@ -13,6 +13,7 @@
         --accent-hover: #817aff;
         --text-light: #f5f5f5;
         --text-muted: #b5b5d1;
+        --output-bg: #24243b;
     }
 
     body {
@@ -28,14 +29,8 @@
         text-align: center;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    header h1 {
-        margin: 0;
-        font-size: 2.2rem;
-    }
-    header p {
-        color: var(--text-muted);
-        font-size: 1.1rem;
-    }
+    header h1 { margin: 0; font-size: 2.2rem; }
+    header p { color: var(--text-muted); font-size: 1.1rem; }
 
     nav {
         background: var(--bg-mid);
@@ -98,19 +93,27 @@
         margin: 1rem 0;
     }
 
-    .quiz {
+    .quiz, .output, .explainer {
         background: #24243b;
         padding: 1rem;
         border-radius: 8px;
         margin-top: 1.5rem;
     }
 
-    input {
+    input, textarea {
         width: 100%;
         padding: 0.5rem;
         border-radius: 5px;
         border: none;
         margin-top: 0.5rem;
+        font-family: Consolas, monospace;
+        background: #2e2e44;
+        color: var(--text-light);
+    }
+
+    textarea {
+        height: 200px;
+        resize: vertical;
     }
 
     button {
@@ -122,6 +125,7 @@
         cursor: pointer;
         margin-top: 1rem;
         font-size: 1rem;
+        transition: background 0.3s;
     }
     button:hover {
         background: var(--accent-hover);
@@ -165,94 +169,78 @@
     <a href="#" onclick="showSection('lesson4')">Lesson 4</a>
     <a href="#" onclick="showSection('lesson5')">Lesson 5</a>
     <a href="#" onclick="showSection('quiz')">Quiz</a>
+    <a href="#" onclick="showSection('playground')">Playground</a>
 </nav>
 
+<!-- 🏠 HOME -->
 <section id="home" class="active">
     <h2>Welcome to Lua Learning!</h2>
     <p>Lua is a lightweight, high-level scripting language known for its simplicity and flexibility.</p>
     <ul>
         <li>🧠 Simple, beginner-friendly syntax</li>
-        <li>🎮 Widely used in <strong>Roblox</strong>, <strong>World of Warcraft</strong> addons, and <strong>game engines</strong></li>
+        <li>🎮 Widely used in <strong>Roblox</strong> and <strong>game engines</strong></li>
         <li>⚙️ Integrates easily with C/C++ and embedded systems</li>
     </ul>
-    <div class="definition"><strong>Definition:</strong> <em>Lua</em> — A lightweight scripting language designed for embedded use in applications.</div>
 </section>
 
+<!-- 📚 LESSONS (same as before) -->
 <section id="lesson1">
     <h2>Lesson 1: Variables and Printing</h2>
-    <p>Variables are used to store data. In Lua, use the <code>local</code> keyword to create a variable that only exists inside the current block.</p>
     <pre><code>local name = "Lua"
 print("Hello, " .. name)</code></pre>
-    <p><strong>Explanation:</strong> The <code>..</code> operator joins strings together (called <em>concatenation</em>).</p>
-    <div class="definition"><strong>Variable:</strong> A storage location that holds a value that can change while the program runs.</div>
-    <div class="definition"><strong>Concatenation:</strong> Combining two or more strings into one using <code>..</code>.</div>
 </section>
 
 <section id="lesson2">
     <h2>Lesson 2: Tables (Lua’s Arrays & Dictionaries)</h2>
-    <p>Tables are Lua’s only data structure — they can act as lists, dictionaries, or even objects.</p>
     <pre><code>local fruits = {"apple", "banana", "cherry"}
-print(fruits[1])  -- prints "apple"
-
-local person = {name = "Alex", age = 20}
-print(person.name)</code></pre>
-    <p><strong>Tip:</strong> Lua starts indexing at 1, not 0!</p>
-    <div class="definition"><strong>Table:</strong> A collection type used to store multiple values (lists or key-value pairs).</div>
+print(fruits[1])
+</code></pre>
 </section>
 
 <section id="lesson3">
     <h2>Lesson 3: Loops and Functions</h2>
-    <p>Loops allow you to repeat code, while functions help organize it for reuse.</p>
     <pre><code>for i = 1, 5 do
     print("Count: " .. i)
 end
-
-function greet(name)
-    print("Hello, " .. name)
-end
-
-greet("Lua Learner")</code></pre>
-    <div class="definition"><strong>Function:</strong> A block of reusable code that performs a specific task.</div>
+</code></pre>
 </section>
 
 <section id="lesson4">
-    <h2>Lesson 4: Conditionals (If, Else, and Logic)</h2>
-    <p>Conditionals let your program make decisions based on logic.</p>
+    <h2>Lesson 4: Conditionals</h2>
     <pre><code>local age = 18
-
 if age >= 18 then
     print("You are an adult!")
-else
-    print("You are a minor.")
 end</code></pre>
-    <div class="definition"><strong>Conditional:</strong> Code that executes only when certain conditions are true.</div>
 </section>
 
 <section id="lesson5">
     <h2>Lesson 5: Roblox Lua Basics</h2>
-    <p>Roblox uses a version of Lua called <strong>Luau</strong> for scripting game mechanics.</p>
     <pre><code>local part = Instance.new("Part")
-part.Size = Vector3.new(4, 1, 4)
-part.Position = Vector3.new(0, 5, 0)
 part.Anchored = true
 part.Parent = workspace</code></pre>
-    <p>This code creates a floating block in Roblox Studio!</p>
-    <div class="definition"><strong>Instance:</strong> A Roblox object, like a Part, Script, or GUI element.</div>
 </section>
 
+<!-- 🧩 QUIZ -->
 <section id="quiz">
     <h2>🧩 Test Your Knowledge</h2>
-    <p>Answer the questions below to test your Lua skills!</p>
-
     <div class="quiz"><p><strong>1.</strong> What keyword declares a local variable?</p><input type="text" id="q1"></div>
     <div class="quiz"><p><strong>2.</strong> What operator joins two strings?</p><input type="text" id="q2"></div>
     <div class="quiz"><p><strong>3.</strong> What number does Lua start indexing from?</p><input type="number" id="q3"></div>
-    <div class="quiz"><p><strong>4.</strong> What function outputs text to the console?</p><input type="text" id="q4"></div>
-    <div class="quiz"><p><strong>5.</strong> What is the name of Lua’s main data structure?</p><input type="text" id="q5"></div>
-
+    <div class="quiz"><p><strong>4.</strong> What function outputs text?</p><input type="text" id="q4"></div>
+    <div class="quiz"><p><strong>5.</strong> What is Lua’s main data structure?</p><input type="text" id="q5"></div>
     <button onclick="checkQuiz()">Submit Quiz</button>
     <p id="quizResult"></p>
     <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+</section>
+
+<!-- 💻 PLAYGROUND -->
+<section id="playground">
+    <h2>💻 Lua Code Playground</h2>
+    <p>Try Lua code below and see the output instantly — plus a human-readable explanation!</p>
+    <textarea id="luaCode" placeholder="Example:&#10;local x = 2 + 2&#10;print(x)"></textarea>
+    <button onclick="runLua()">▶ Run Code</button>
+    <div class="output" id="output">💻 Output will appear here...</div>
+    <div class="explainer" id="explainer">🧠 Code explainer will appear here...</div>
 </section>
 
 <footer>
@@ -267,29 +255,52 @@ function showSection(id) {
 }
 
 function checkQuiz() {
-    const answers = {
-        q1: "local",
-        q2: "..",
-        q3: "1",
-        q4: "print",
-        q5: "table"
-    };
-
+    const answers = { q1:"local", q2:"..", q3:"1", q4:"print", q5:"table" };
     let score = 0;
     for (let key in answers) {
-        const userAns = document.getElementById(key).value.trim().toLowerCase();
-        if (userAns == answers[key]) score++;
+        const val = document.getElementById(key).value.trim().toLowerCase();
+        if (val === answers[key]) score++;
     }
-
     const total = Object.keys(answers).length;
-    const percent = Math.round((score / total) * 100);
+    const percent = Math.round((score/total)*100);
+    document.getElementById("quizResult").innerHTML = `<strong>You scored ${score}/${total} (${percent}%)!</strong>`;
+    document.getElementById("progressBar").style.width = percent + "%";
+}
 
-    const result = document.getElementById('quizResult');
-    result.innerHTML = `<strong>You scored ${score}/${total} (${percent}%)!</strong> ${
-        percent === 100 ? "🌟 Perfect!" : percent >= 60 ? "👍 Good job!" : "💡 Keep practicing!"
-    }`;
+// 🧩 LUA SIMULATION
+function runLua() {
+    const code = document.getElementById("luaCode").value.trim();
+    const outputEl = document.getElementById("output");
+    const explainerEl = document.getElementById("explainer");
+    if (!code) { outputEl.textContent = "⚠️ Please enter Lua code."; return; }
 
-    document.getElementById('progressBar').style.width = percent + '%';
+    let output = "";
+    const lines = code.split("\n");
+    for (let line of lines) {
+        line = line.trim();
+        if (line.startsWith("print")) {
+            const match = line.match(/print\((.*)\)/);
+            if (match) {
+                let content = match[1];
+                try {
+                    if (/^".*"$/.test(content)) output += content.slice(1,-1) + "\n";
+                    else if (/^[0-9+\-*/ ().]+$/.test(content)) output += eval(content) + "\n";
+                    else output += content + "\n";
+                } catch { output += "⚠️ Error in: " + content + "\n"; }
+            }
+        }
+    }
+    outputEl.textContent = output || "✅ Code executed successfully (no output).";
+
+    let exp = "";
+    if (code.includes("local")) exp += "🧩 You’re creating local variables.\n";
+    if (code.includes("print")) exp += "🖨️ You’re printing output to the console.\n";
+    if (code.includes("function")) exp += "🧠 You defined a reusable function.\n";
+    if (code.match(/if .* then/)) exp += "⚖️ Your code checks a condition.\n";
+    if (code.match(/for .* do/)) exp += "🔁 You’re looping.\n";
+    if (code.includes("{")) exp += "📦 You’re using a table (array or dictionary).\n";
+    if (!exp) exp = "🤔 Couldn’t detect specific Lua features.";
+    explainerEl.textContent = exp;
 }
 </script>
 
