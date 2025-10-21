@@ -42,7 +42,6 @@ No backend required — runs entirely in your browser!
 git clone https://github.com/ZoomZam001/Learn-Lua
 2️⃣ Open the project:
 
-bash
 Copy code
 cd Learn-Lua
 3️⃣ Run locally:
